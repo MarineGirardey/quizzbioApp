@@ -1,0 +1,13 @@
+{% extends "quizzbioApp/base.html" %}
+{% load static %}
+{% block content %}
+
+<h1>You have been logged out.</h1>
+
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <a class="ml-2" href="{% url 'quizzbio-login' %}">Log In again?</a>
+            </small>
+        </div>
+
+{% endblock content %}

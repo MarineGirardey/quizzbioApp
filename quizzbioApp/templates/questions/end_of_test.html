@@ -1,0 +1,17 @@
+{% extends "quizzbioApp/base.html" %}
+
+{% block content %}
+
+<h2> Congratulations you finished the test! </h2>
+
+    <p> You're score : {{ score }} </p>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script>
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+    </script>
+
+{% endblock content %}

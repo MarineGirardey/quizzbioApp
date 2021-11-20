@@ -1,0 +1,34 @@
+{% extends "quizzbioApp/base.html" %}
+{% block content %}
+{% load static %}
+
+<h1>Choose your test</h1>
+     <form action="/questions/" method="POST">
+        <a class="btn btn-info btn-lg btn-block" name='microscopy' id=1 type="button" onclick='microscopy();'>
+        Microscopy type quiz
+        </a>
+        <a class="btn btn-info btn-lg btn-block" name='component' id=2 type="button" onclick='component();'>
+        Cellular component quiz
+        </a>
+    </form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        function microscopy() {
+            const micro = [...document.getElementsByName('microscopy')];
+            micro.forEach(el=>{
+                m = el.name;
+            })
+            window.location.href = window.location.href + m;
+        };
+    </script>
+    <script>
+        function component() {
+            const comp = [...document.getElementsByName('component')];
+            comp.forEach(el=>{
+                c = el.name;
+            })
+            window.location.href = window.location.href + c;
+        };
+    </script>
+{% endblock content %}

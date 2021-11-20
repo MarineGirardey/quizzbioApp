@@ -1,0 +1,97 @@
+{% extends "quizzbioApp/base.html" %}
+{% load static %}
+{% block content %}
+
+<form methode="POST">
+    {% if pk_image.0 == 121 or end_the_test == 'end_the_test' %}
+        <div class="submit">
+            <button type="button" class="btn btn-success btn-lg" onclick="endTheTest();">End the test</button>
+        </div>
+    {% else %}
+
+        <h2> {{ quest }} </h2>
+            {% if image_nb == 3 %}
+                <img id='microscopy_img' width="300" height="300" style="float:left;margin:20px 20px 20px 50px;" alt="Image description" src="{% static image_src.0 %}"/>
+                <img id='microscopy_img' width="300" height="300" alt="Image description" style="float:left;margin:20px 20px 20px 20px;" src="{% static image_src.1 %}"/>
+                <img id='microscopy_img' width="300" height="300" alt="Image description" style="float:left;margin:20px 20px 20px 20px;" src="{% static image_src.2 %}"/>
+            {% endif %}
+            {% if image_nb == 2 %}
+                <img id='microscopy_img' width="300" height="300" style="float:left;margin:20px 20px 20px 50px;" alt="Image description" src="{% static image_src.0 %}"/>
+                <img id='microscopy_img' width="300" height="300" alt="Image description" style="float:left;margin:20px 20px 20px 20px;" src="{% static image_src.1 %}"/>
+            {% endif %}
+
+        <div class="flex-container">
+        {% for a in answers %}
+            <label type="button">
+                <input class="btn btn-primary btn-lg btn-block" type="radio" value='radiobut' name={{image_nb}} id={{ a.pk }} autocomplete="off">{{ a }}</input>
+            </label>
+        {% endfor %}
+
+        <div>
+            <label type="button">
+                <input class="btn btn-primary btn-lg btn-block" type="radio" value='radiobut' name={{image_nb}} id='undetermined' autocomplete="off">Cannot be determined</input>
+            </label>
+        </div>
+        <div class="submit">
+            <button type="button" class="btn btn-success btn-lg" onclick="displayNextImage();" id={{ pk_image }}>Validate</button>
+        </div>
+        {{ score }}
+
+    {% endif %}
+
+</form>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+
+        function endTheTest() {
+            var score = {{ score }}
+            window.location.href = "{% url 'quizzbio-end_of_test' %}" + score;
+        };
+    </script>
+
+    <script>
+
+        function displayNextImage() {
+            const elements = [...document.getElementsByName({{image_nb}})]
+            const image_number = [...document.getElementsByName({{image_nb}})]
+            var j = 0
+            var quiz_type = '{{ quiz_type }}'
+            var nb_quest = {{ nb_quest }} + 1
+            var score = {{ score }}
+
+             image_number.forEach(imgs_nbs=>{
+                if (j==0){
+                    var img_nb = imgs_nbs.name
+                    if (img_nb==2){
+                        var i = {{ pk_image.1 }}
+                        elements.forEach(el=>{
+                        if (el.checked) {
+                            var ans_id = el.id;
+                            if(quiz_type == 'all_questions_test'){
+                                window.location.href = "{% url 'quizzbio-all_component' %}" + i + '/' + ans_id + '/' + score;
+                            } else{
+                                window.location.href = "{% url 'quizzbio-quick_component' %}" + i + '/' + ans_id + '/' + nb_quest + '/' + score;
+                            }
+                        }})
+                    }
+
+                    if (img_nb==3){
+                        var i = {{ pk_image.2 }}
+                        elements.forEach(el=>{
+                        if (el.checked) {
+                            var ans_id = el.id;
+                            if(quiz_type == 'all_questions_test'){
+                                window.location.href = "{% url 'quizzbio-all_microscopy' %}" + i + '/' + ans_id + '/' + score;
+                            } else{
+                                window.location.href = "{% url 'quizzbio-quick_microscopy' %}" + i + '/' + ans_id + '/' + nb_quest + '/' + score;
+                            }
+                        }})
+                    }
+                }
+                j += 1
+            })
+        };
+    </script>
+
+{% endblock content %}
