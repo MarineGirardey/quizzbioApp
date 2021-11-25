@@ -4,8 +4,12 @@ body {
   margin-top: 5rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5{
   color: #ffffff;
+}
+
+h6 {
+  color: #000000;
 }
 
 main {
@@ -120,43 +124,6 @@ body, html {
 
  .padding {
      padding: 3rem
- }
-
- .card {
-     box-shadow: none;
-     -webkit-box-shadow: none;
-     -moz-box-shadow: none;
-     -ms-box-shadow: none
- }
-
- .card {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     min-width: 0;
-     word-wrap: break-word;
-     background-color: #fff;
-     background-clip: border-box;
-     border: 1px solid #3da5f;
-     border-radius: 0
- }
-
- .card .card-body {
-     padding: 1.25rem 1.75rem
- }
-
- .card .card-title {
-     color: #000000;
-     margin-bottom: 0.625rem;
-     text-transform: capitalize;
-     font-size: 0.875rem;
-     font-weight: 500
- }
-
- .card .card-description {
-     margin-bottom: .875rem;
-     font-weight: 400;
-     color: #76838f
  }
 
  .btn.btn-social-icon {
@@ -292,3 +259,4 @@ body, html {
   background-color: #224797;
   color: white;
 }
+

@@ -1,0 +1,16 @@
+{% extends "quizzbioApp/base.html" %}
+{% block content %}
+{% load static %}
+{% for img in image_all %}
+
+<div class="card" style="width:33rem;float:left;margin:20px 10px 10px 15px;border-radius: 5px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);">
+    <img id='microscopy_img' width="300" height="300" style="float:center;margin:20px 20px 20px 110px;" alt="Image description" src="{% static img.0 %}"/>
+    <div class="card-body">
+        <h6 class="card-title" style="font-weight:bold;text-align:justify;" >{{ img.3 }} in {{ img.5 }} cell type observed with {{ img.2 }} in {{ img.4 }} organism</h3>
+        <h6 class="card-title" style="text-align:justify;" >{{ img.1 }}</h6>
+        <a href="https://doi.org/{{ img.6 }}" class="btn btn-info">Learn more</a>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock content %}

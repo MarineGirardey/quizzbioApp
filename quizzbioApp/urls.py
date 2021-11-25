@@ -10,6 +10,7 @@ urlpatterns = [
     path('register/', views.register, name='quizzbio-register'),
     path("login/", auth_views.LoginView.as_view(template_name='registration/login.html'), name='quizzbio-login'),
     path("logout/", views.logout_function, name='quizzbio-logout'),
+    path("learn/", views.learn, name='quizzbio-learn'),
 
     path('test_type/', views.test_type, name="quizzbio-test_type"),
     path("all_questions_test/", views.all_questions_test, name='quizzbio-all_questions_test'),

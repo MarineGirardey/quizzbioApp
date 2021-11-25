@@ -2,48 +2,62 @@
 {% load static %}
 {% block content %}
 
+<!-- display all questions depending on the quiz type selected -->
 <form methode="POST">
+    <!-- if the end of the test is reached -->
     {% if pk_image.0 == 121 or end_the_test == 'end_the_test' %}
         <div class="submit">
             <button type="button" class="btn btn-success btn-lg" onclick="endTheTest();">End the test</button>
         </div>
     {% else %}
 
+        <!-- QUESTION -->
         <h2> {{ quest }} </h2>
-            {% if image_nb == 3 %}
-                <img id='microscopy_img' width="300" height="300" style="float:left;margin:20px 20px 20px 50px;" alt="Image description" src="{% static image_src.0 %}"/>
-                <img id='microscopy_img' width="300" height="300" alt="Image description" style="float:left;margin:20px 20px 20px 20px;" src="{% static image_src.1 %}"/>
-                <img id='microscopy_img' width="300" height="300" alt="Image description" style="float:left;margin:20px 20px 20px 20px;" src="{% static image_src.2 %}"/>
-            {% endif %}
-            {% if image_nb == 2 %}
-                <img id='microscopy_img' width="300" height="300" style="float:left;margin:20px 20px 20px 50px;" alt="Image description" src="{% static image_src.0 %}"/>
-                <img id='microscopy_img' width="300" height="300" alt="Image description" style="float:left;margin:20px 20px 20px 20px;" src="{% static image_src.1 %}"/>
-            {% endif %}
+            <div>
+                <!-- IMAGES -->
+                <!-- if it is the microscopy test -->
+                {% if image_nb == 3 %}
+                    <img id='microscopy_img' width="300" height="300" style="margin:20px 20px 20px 50px;" alt="Image description" src="{% static image_src.0 %}"/>
+                    <img id='microscopy_img' width="300" height="300" alt="Image description" style="margin:20px 20px 20px 20px;" src="{% static image_src.1 %}"/>
+                    <img id='microscopy_img' width="300" height="300" alt="Image description" style="margin:20px 20px 20px 20px;" src="{% static image_src.2 %}"/>
+                {% endif %}
+                <!-- if it is the component test -->
+                {% if image_nb == 2 %}
+                    <img id='microscopy_img' width="300" height="300" style="margin:20px 20px 20px 50px;" alt="Image description" src="{% static image_src.0 %}"/>
+                    <img id='microscopy_img' width="300" height="300" alt="Image description" style="margin:20px 20px 20px 20px;" src="{% static image_src.1 %}"/>
+                {% endif %}
+            </div>
 
+        <!-- ANSWERS -->
         <div class="flex-container">
+        <!-- display possible answer -->
         {% for a in answers %}
-            <label type="button">
-                <input class="btn btn-primary btn-lg btn-block" type="radio" value='radiobut' name={{image_nb}} id={{ a.pk }} autocomplete="off">{{ a }}</input>
-            </label>
+            <p>
+                <label type="button">
+                    <input class="btn btn-primary btn-lg" style="margin-right:8px;" type="radio" value='radiobut' name={{image_nb}} id={{ a.pk }} autocomplete="off">{{ a }}</input>
+                </label>
+            </p>
         {% endfor %}
-
+        <!-- display the undetermined answer -->
         <div>
             <label type="button">
-                <input class="btn btn-primary btn-lg btn-block" type="radio" value='radiobut' name={{image_nb}} id='undetermined' autocomplete="off">Cannot be determined</input>
+                <input class="btn btn-primary btn-lg" style="margin-right:8px;" type="radio" value='radiobut' name={{image_nb}} id='undetermined' autocomplete="off">Cannot be determined</input>
             </label>
         </div>
+
+        <!-- SUBMIT -->
         <div class="submit">
             <button type="button" class="btn btn-success btn-lg" onclick="displayNextImage();" id={{ pk_image }}>Validate</button>
         </div>
-        {{ score }}
+        </div>
 
     {% endif %}
-
 </form>
 
+<!-- JAVASCRIPT -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
-
+        // END OF TEST WEB PAGE REDIRECTION
         function endTheTest() {
             var score = {{ score }}
             window.location.href = "{% url 'quizzbio-end_of_test' %}" + score;
@@ -51,23 +65,33 @@
     </script>
 
     <script>
-
+        // GET INFORMATION TO DISPLAY NEXT IMAGES
         function displayNextImage() {
+            // get elems in the specific answer id
             const elements = [...document.getElementsByName({{image_nb}})]
             const image_number = [...document.getElementsByName({{image_nb}})]
+            // just a variable to get the first element in image_number
             var j = 0
             var quiz_type = '{{ quiz_type }}'
-            var nb_quest = {{ nb_quest }} + 1
+            var nb_quest = {{ nb_quest }} + 1 // +1 for the number of question (quick test limit to 10 quest)
             var score = {{ score }}
 
+            // for loop to browse elem in image_number
              image_number.forEach(imgs_nbs=>{
                 if (j==0){
                     var img_nb = imgs_nbs.name
+
+                    // COMPONENT
+                    // if it is the component test
                     if (img_nb==2){
+                        // store the number of the pk image to get the true answer in view and compute score
                         var i = {{ pk_image.1 }}
+                        // for loop to browse elem in elements
                         elements.forEach(el=>{
                         if (el.checked) {
+                            // store the id of the radiobut selected
                             var ans_id = el.id;
+                            // prepare next url depending on the test type
                             if(quiz_type == 'all_questions_test'){
                                 window.location.href = "{% url 'quizzbio-all_component' %}" + i + '/' + ans_id + '/' + score;
                             } else{
@@ -76,6 +100,7 @@
                         }})
                     }
 
+                    // MICROSCOPY
                     if (img_nb==3){
                         var i = {{ pk_image.2 }}
                         elements.forEach(el=>{

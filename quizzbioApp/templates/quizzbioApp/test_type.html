@@ -2,7 +2,9 @@
 {% block content %}
 {% load static %}
 
-<h1>Choose your test</h1>
+<h1> {{ test_type }} : Choose your quiz</h1>
+
+<p>
      <form action="/questions/" method="POST">
         <a class="btn btn-info btn-lg btn-block" name='microscopy' id=1 type="button" onclick='microscopy();'>
         Microscopy type quiz
@@ -11,7 +13,7 @@
         Cellular component quiz
         </a>
     </form>
-
+</p>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
         function microscopy() {

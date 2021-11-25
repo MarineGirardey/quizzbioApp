@@ -15,9 +15,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS and main.css (add ?ver=<?php echo rand(111,999)? to update webpage) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'quizzbioApp/main.css' %}">
+
 
     {% if title %}
         <title>QuizzBio - {{ title }}</title>
@@ -42,7 +43,7 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'quizzbio-home' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'quizzbio-about' %}">About</a>
-              <a class="nav-item nav-link" href="{% url 'quizzbio-home' %}">Quizz</a>
+              <a class="nav-item nav-link" href="{% url 'quizzbio-learn' %}">Learn</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">

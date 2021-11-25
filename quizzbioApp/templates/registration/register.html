@@ -2,6 +2,18 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{% if valid_form%}
+    {% if valid_form == 'fail' %}
+        <div class="alert alert-danger" role="alert">
+            Registration failed !
+        </div>
+    {% else %}
+        <div class="alert alert-success" role="alert">
+            Account successfully created for {{ valid_form }} !
+        </div>
+    {% endif %}
+
+{% else %}
     <form method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
@@ -9,12 +21,14 @@
             {{ form|crispy }}
         </fieldset>
         <div class="form-group">
-        <button class="btn btn-info" type="submit">Sign Up</button>
+        <button class="btn btn-info" type="submit" href="{% url 'quizzbio-login' %}">Sign Up</button>
     </form>
+
     <div class="border-top pt-3">
         <small class="text-muted">
             Already have an account? <a class="ml-2" href="{% url 'quizzbio-register' %}">Sign In</a>
         </small>
     </div>
 
+{% endif %}
 {% endblock content %}
